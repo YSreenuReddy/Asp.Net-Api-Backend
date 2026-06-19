@@ -3,13 +3,18 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// Railway PORT
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+}
 
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<StudentDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(
+builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,12 +31,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Swagger always enable
 app.UseSwagger();
 app.UseSwaggerUI();
-
-// REMOVE THIS LINE
-// app.UseHttpsRedirection();
 
 app.UseCors("AllowAngular");
 

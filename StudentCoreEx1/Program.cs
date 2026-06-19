@@ -36,13 +36,16 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+if (app.Environment.IsProduction() || app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapGet("/", () => "API Running");
 app.Run();

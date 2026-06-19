@@ -4,22 +4,15 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Railway PORT
-var port = Environment.GetEnvironmentVariable("PORT");
-if (!string.IsNullOrEmpty(port))
-{
-    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
-}
-//var connectionString =
-//builder.Configuration["ConnectionStrings__DefaultConnection"];
-
-//builder.Services.AddDbContext<StudentDbContext>(options =>
-//options.UseSqlServer(connectionString));
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<StudentDbContext>(options =>
-options.UseSqlServer(
-builder.Configuration.GetConnectionString("DefaultConnection")));
+// REMOVE DB TEMPORARILY
+// builder.Services.AddDbContext<StudentDbContext>(options =>
+// options.UseSqlServer(
+// builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -36,15 +29,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
-//app.MapControllers();
+// TEMP TEST ROUTE
 app.MapGet("/", () => "API Running");
+
 app.Run();

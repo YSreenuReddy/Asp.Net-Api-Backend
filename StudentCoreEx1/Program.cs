@@ -9,11 +9,11 @@ if (!string.IsNullOrEmpty(port))
 {
     builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 }
-var connectionString =
-builder.Configuration["ConnectionStrings__DefaultConnection"];
+//var connectionString =
+//builder.Configuration["ConnectionStrings__DefaultConnection"];
 
-builder.Services.AddDbContext<StudentDbContext>(options =>
-options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<StudentDbContext>(options =>
+//options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers();
 
@@ -36,16 +36,15 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsProduction() || app.Environment.IsDevelopment())
-{
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
 
 app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
-app.MapControllers();
+//app.MapControllers();
 app.MapGet("/", () => "API Running");
 app.Run();

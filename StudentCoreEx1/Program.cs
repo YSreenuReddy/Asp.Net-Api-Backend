@@ -9,6 +9,11 @@ if (!string.IsNullOrEmpty(port))
 {
     builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 }
+var connectionString =
+builder.Configuration["ConnectionStrings__DefaultConnection"];
+
+builder.Services.AddDbContext<StudentDbContext>(options =>
+options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers();
 

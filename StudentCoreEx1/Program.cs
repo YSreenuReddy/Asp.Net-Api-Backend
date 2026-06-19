@@ -13,8 +13,8 @@ if (!string.IsNullOrEmpty(port))
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<StudentDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(
+builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,7 +38,7 @@ app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
-// KEEP BOTH
+// IMPORTANT
 app.MapGet("/", () => "API Running");
 app.MapControllers();
 
